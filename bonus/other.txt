@@ -1,0 +1,41 @@
+void print_chain_list(list_t * head)
+{
+    if (head == NULL) return ;
+    int i = 0;
+    list_t * current = head;
+    while (current -> next != head) {
+        get_color_form_value(current -> signature);
+        printf("%d ", current -> val);
+        printf("\033[0m");
+        current = current -> next;
+    }
+    get_color_form_value(current -> signature);
+    printf("%d ", current -> val);
+    printf("\033[0m");
+    printf("\n");
+}
+
+int get_color_form_value(int value) {
+    if ((value - 1) % 6 == 0) return printf("\033[0;31m");
+    if ((value - 1) % 6 == 1) return printf("\033[0;32m");
+    if ((value - 1) % 6 == 2) return printf("\033[0;33m");
+    if ((value - 1) % 6 == 3) return printf("\033[0;34m");
+    if ((value - 1) % 6 == 4) return printf("\033[0;35m");
+    if ((value - 1) % 6 == 5) return printf("\033[0;36m");
+}
+
+int get_mid_point (list_t * head, int signature)
+{
+    if (head == NULL) return 0;
+    list_t * current = head;
+    int min = get_max_value(current, signature);
+    int len = len_list_signature(current, signature);
+    long int max_allowed = get_min_value(current, signature) - 1;
+    int i = 0;
+    while (i <= len/2) {
+        min = get_min_value2(current, max_allowed, signature);
+        max_allowed = min;
+        i++;
+    }
+    return min;
+}
